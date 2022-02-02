@@ -44,7 +44,7 @@ jobs:
       update_a,
       update_b
     ]
-    if: ${{ always() }}
+    if: ${{ always() && !cancelled() && needs.check_a_b.result == 'success' }}
     steps:
       - name: Cleanup A and B
         id: cleanup_a_b
