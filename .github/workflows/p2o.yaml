@@ -10,7 +10,8 @@ jobs:
     name: check_a_b
     runs-on: ubuntu-latest
     outputs:
-      run_job: ${{ steps.check_files.outputs.run_job }}
+      run_project_a_build: ${{ steps.check_files.outputs.run_project_a_build }}
+      run_project_b_build: ${{ steps.check_files.outputs.run_project_b_build }}
     steps:
       - name: Check updated
         id: check_files
