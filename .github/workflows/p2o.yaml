@@ -16,7 +16,7 @@ jobs:
         id: check_files
         run: |
           echo "::set-output name=run_project_a_build::true"
-          echo "::set-output name=run_project_a_build::false"
+          echo "::set-output name=run_project_b_build::false"
   update_a:
     name: update_a
     runs-on: ubuntu-latest
