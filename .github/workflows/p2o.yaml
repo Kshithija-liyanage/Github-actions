@@ -1,0 +1,48 @@
+name: Parallel pipe to one
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  check_a_b:
+    name: check_a_b
+    runs-on: ubuntu-latest
+    outputs:
+      run_job: ${{ steps.check_files.outputs.run_job }}
+    steps:
+      - name: Check updated
+        id: check_files
+        run: |
+          echo "::set-output name=run_project_a_build::true"
+          echo "::set-output name=run_project_a_build::false"
+  update_a:
+    name: update_a
+    runs-on: ubuntu-latest
+    needs: check_a_b
+    if: needs.check_a_b.outputs.run_project_a_build == 'true'
+    steps:
+      - name: Dummy A
+        id: dummy_a
+        run: echo "Running build A"
+  update_b:
+    name: update_b
+    runs-on: ubuntu-latest
+    needs: check_a_b
+    if: needs.check_a_b.outputs.run_project_b_build == 'true'
+    steps:
+      - name: Dummy B
+        id: dummy_b
+        run: echo "Running build B"
+  wait_a_b:
+    name: wait_a_b
+    runs-on: ubuntu-latest
+    needs: [
+      check_a_b,
+      update_a,
+      update_b
+    ]
+    if: ${{ always() }}
+    steps:
+      run: echo "Clean up a and b"
