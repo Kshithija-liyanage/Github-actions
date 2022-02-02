@@ -45,4 +45,6 @@ jobs:
     ]
     if: ${{ always() }}
     steps:
-      run: echo "Clean up a and b"
+      - name: Cleanup A and B
+        id: cleanup_a_b
+        run: echo "Clean up a and b"
